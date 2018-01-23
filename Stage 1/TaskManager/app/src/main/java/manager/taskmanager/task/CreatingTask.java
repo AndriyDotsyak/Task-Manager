@@ -44,8 +44,7 @@ public class CreatingTask extends AppCompatActivity implements View.OnClickListe
                 Log.d("main", "Save");
                 break;
             case R.id.btn_Exit:
-                intent = new Intent("android.intent.action.MAIN");
-                startActivity(intent);
+                CreatingTask.this.finish();
                 break;
         }
     }
