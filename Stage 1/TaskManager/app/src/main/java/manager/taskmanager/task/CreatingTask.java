@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import manager.taskmanager.R;
+import manager.taskmanager.adapter.ObjectTask;
 
 public class CreatingTask extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
     EditText etDenomination;
@@ -37,11 +38,14 @@ public class CreatingTask extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent intent;
-
         switch (v.getId()) {
             case R.id.btn_Save:
-                Log.d("main", "Save");
+                String sDenomination = etDenomination.getText().toString();
+                String sComment = etComment.getText().toString();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("ObjectTask", new ObjectTask(sDenomination, sComment));
+                startActivity(intent);
                 break;
             case R.id.btn_Exit:
                 CreatingTask.this.finish();

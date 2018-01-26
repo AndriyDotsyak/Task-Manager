@@ -14,17 +14,9 @@ import manager.taskmanager.R;
 public class Adapter {
     public SimpleAdapter simpleAdapter;
     private Activity activity;
-    private EditText etDenomination;
-    private EditText etComment;
 
-    private LinkedList<String> denomination = new LinkedList<>();
-    private LinkedList<String> comment = new LinkedList<>();
-
-    public Adapter(Activity activity, EditText etDenomination, EditText etComment) {
+    public Adapter(Activity activity) {
         this.activity = activity;
-        this.etDenomination = etDenomination;
-        this.etComment = etComment;
-
         addItem();
     }
 
@@ -33,8 +25,8 @@ public class Adapter {
         Map<String, Object> map;
 
         map = new HashMap<>();
-        map.put("Denomination", etDenomination.getText().toString());
-        map.put("Comment", etComment.getText().toString());
+        map.put("Denomination", "Denomination");
+        map.put("Comment", "Comment");
         data.add(map);
 
         String[] from = {"Denomination", "Comment"};
