@@ -3,7 +3,6 @@ package manager.taskmanager.task;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -43,10 +42,13 @@ public class CreatingTask extends AppCompatActivity implements View.OnClickListe
                 String sDenomination = etDenomination.getText().toString();
                 String sComment = etComment.getText().toString();
 
+                ObjectTask object = new ObjectTask(sDenomination, sComment);
+
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("ObjectTask", new ObjectTask(sDenomination, sComment));
+                intent.putExtra(ObjectTask.class.getCanonicalName(), object);
                 startActivity(intent);
                 break;
+
             case R.id.btn_Exit:
                 CreatingTask.this.finish();
                 break;

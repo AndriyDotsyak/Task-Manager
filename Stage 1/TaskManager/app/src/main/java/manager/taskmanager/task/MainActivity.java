@@ -3,12 +3,9 @@ package manager.taskmanager.task;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-
-import java.util.LinkedList;
 
 import manager.taskmanager.R;
 import manager.taskmanager.adapter.Adapter;
@@ -21,34 +18,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String denomination;
     String comment;
 
-    //private LinkedList<String> denomination = new LinkedList<>();
-    //private LinkedList<String> comment = new LinkedList<>();
+    Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Adapter adapter = new Adapter(MainActivity.this);
+        adapter = new Adapter(MainActivity.this);
+        adapter.createAdapter();
         lvTask = findViewById(R.id.lv_Task);
-        lvTask.setAdapter(adapter.simpleAdapter);
 
+        lvTask.setAdapter(adapter.simpleAdapter);
 
         btnAddTask = findViewById(R.id.btn_AddTask);
         btnAddTask.setOnClickListener(this);
-
-        Log.d("main", "Debug");
-
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
 
-        //getDataTask();
-        //Log.d("main", denomination);
-        //Log.d("main", comment);
+        getDataTask();
+
+        adapter.addItem(denomination, comment);
     }
+
 
     @Override
     public void onClick(View v) {
@@ -61,9 +56,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getDataTask() {
-        ObjectTask object = getIntent().getParcelableExtra("ObjectTask");
+        ObjectTask object = getIntent().getParcelableExtra(ObjectTask.class.getCanonicalName());
 
-        denomination = object.getDenomination();
-        comment = object.getComment();
+        if (object != null) {
+            denomination = object.getDenomination();
+            comment = object.getComment();
+        }
+
     }
 }
