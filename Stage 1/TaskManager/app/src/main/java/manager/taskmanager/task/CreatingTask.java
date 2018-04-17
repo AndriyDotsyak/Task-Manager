@@ -5,52 +5,44 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import manager.taskmanager.R;
-import manager.taskmanager.adapter.ObjectTask;
 
 public class CreatingTask extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
+
+    @BindView(R.id.et_Denomination)
     EditText etDenomination;
+
+    @BindView(R.id.et_Comment)
     EditText etComment;
-    Button btnSave;
-    Button btnExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creating_task);
-
-        etDenomination = findViewById(R.id.et_Denomination);
-        etComment = findViewById(R.id.et_Comment);
+        ButterKnife.bind(this);
 
         etDenomination.setOnKeyListener(this);
         etComment.setOnKeyListener(this);
-
-        btnSave = findViewById(R.id.btn_Save);
-        btnExit = findViewById(R.id.btn_Exit);
-
-        btnSave.setOnClickListener(this);
-        btnExit.setOnClickListener(this);
     }
 
-    @Override
+    @OnClick({R.id.btn_Save, R.id.btn_Exit})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_Save:
-                String sDenomination = etDenomination.getText().toString();
-                String sComment = etComment.getText().toString();
-
-                ObjectTask object = new ObjectTask(sDenomination, sComment);
-
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra(ObjectTask.class.getCanonicalName(), object);
-                startActivity(intent);
+                Intent intent = new Intent();
+                intent.putExtra("denomination", etDenomination.getText().toString());
+                intent.putExtra("comment", etComment.getText().toString());
+                setResult(RESULT_OK, intent);
+                finish();
                 break;
 
             case R.id.btn_Exit:
-                CreatingTask.this.finish();
+                finish();
                 break;
         }
     }
